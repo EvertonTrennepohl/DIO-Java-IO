@@ -5,7 +5,7 @@ import java.io.*;
 public class IOObject {
 
     public static void serealizacao() throws IOException {
-        Cachorro cachorro = new Cachorro("Kiron", 8, "Preto, Branco, Marrom");
+        Cachorro cachorro = new Cachorro("Kiron", 8, "Preto, Branco, Marrom", true, true);
 
         File f = new File("cachorro");
 
@@ -20,11 +20,21 @@ public class IOObject {
         ps.close();
     }
 
-    public static void desserealizacao(String arquivo) {
+    public static void desserealizacao(String arquivo) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo));
+        Cachorro objectCachorro = (Cachorro) ois.readObject();
 
+        System.out.printf("\nNome......................: %s", objectCachorro.getNome());
+        System.out.printf("\nIdade.....................: %d", objectCachorro.getIdade());
+        System.out.printf("\nCor.......................: %s", objectCachorro.getCor());
+        System.out.printf("\nPreso.....................: %s\n", objectCachorro.isPreso());
+        System.out.printf("\nVacinado..................: %s\n", objectCachorro.isVacinado());
+
+        System.out.println(objectCachorro);
     }
 
-    public static void main(String[] args) throws IOException {
-        serealizacao();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        //serealizacao();
+        desserealizacao("C:\\workspace\\DIO\\DIO-Java-IO\\cachorro");
     }
 }
